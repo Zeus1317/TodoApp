@@ -44,6 +44,7 @@ function deleteTask(index) {
 function editTask(index) {
     const tasks = getTasks();
     const newText = prompt("Edit task:", tasks[index].text);
+    
     if (newText !== null && newText.trim() !== '') {
         tasks[index].text = newText.trim();
         saveTasks(tasks);
@@ -62,10 +63,18 @@ function renderTasks() {
     tasks.forEach((task, index) => {
         const taskElement = document.createElement('li');
         taskElement.innerHTML = `
-            ${task.text} <small>(${task.addedDate})</small>
-            <button onclick="toggleTaskCompletion(${index})">${task.completed ? 'Undo' : 'Complete'}</button>
-            <button class="edit" onclick="editTask(${index})">Edit</button>
-            <button class="delete" onclick="deleteTask(${index})">Delete</button>
+            <i class="fas ${task.completed ? 'fa-check-circle' : 'fa-circle'}"></i> ${task.text} <small>(${task.addedDate})</small>
+            <div class="task-buttons">
+                <button onclick="toggleTaskCompletion(${index})">
+                    <i class="fas ${task.completed ? 'fa-undo' : 'fa-check'}"></i>
+                </button>
+                <button class="edit" onclick="editTask(${index})">
+                    <i class="fas fa-edit"></i>
+                </button>
+                <button class="delete" onclick="deleteTask(${index})">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
         `;
         if (task.completed) {
             taskElement.classList.add('completed');
